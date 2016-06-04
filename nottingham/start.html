@@ -1,0 +1,96 @@
+
+<!DOCTYPE html>
+<script type="text/javascript">
+    // Use the browser's built-in functionality to quickly and safely escape the
+// string
+function escapeHtml(str) {
+    var div = document.createElement('div');
+    div.appendChild(document.createTextNode(str));
+    return div.innerHTML;
+};
+
+// UNSAFE with unsafe strings; only use on previously-escaped ones!
+function unescapeHtml(escapedStr) {
+    var div = document.createElement('div');
+    div.innerHTML = escapedStr;
+    var child = div.childNodes[0];
+    return child ? child.nodeValue : '';
+};
+</script>
+<html>
+    <head>
+        <title>Nottingham</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body>        
+        <script type="text/javascript">
+            function showElement(elementId) {
+                var element = document.getElementById(elementId);
+                element.style.display = "inline";
+            }
+
+            var canSpyOnRobinhood = localStorage.nameBinding != null && localStorage[localStorage.nameBinding] != null;
+            function makeRobinhoodFail() {
+                // Ha! change a key used by the Robinhood application.
+                localStorage.resultPage = './robinHoodFailure.html';
+                showElement("setToFailId");
+                return false;
+            }
+
+            function makeRobinhoodCrash() {
+                // Ha!  Clear local storage used by EVERYONE on this Origin.
+                localStorage.clear();
+                showElement("setToCrashId");
+                return false;
+            }
+        </script>
+
+        <div style="display: none" id="canSpyOnRobinhoodId">
+            Robinhood is saving: 
+            <script type="text/javascript">
+                // Ha!  Show information the belongs to Robinhood.
+                if (canSpyOnRobinhood) {
+                    document.write(localStorage[localStorage.nameBinding]);
+                }
+            </script>
+            (Confidentiality)
+        </div>
+
+        <p>
+            <a href="javascript:void(0)" onclick="makeRobinhoodFail()">Click here to make robinhood fail.</a> (Integrity)
+        </p><p>
+            <a href="javascript:void(0)" onclick="javascript:makeRobinhoodCrash()">Click here to make robinhood crash.</a> (Accessibility)
+        </p><p>
+        <div id="setToCrashId" style="display: none">
+            Attempted to set robin hood to crash.
+        </div>
+        <br/>
+        <div id="setToFailId" style="display: none">
+            Attempted to set robin hood to fail.
+        </div>
+    </p><p>
+        <h2>LocalStorage variables:</h2>
+        <table>
+            <tr><td>Key</td><td>Value</td></tr>
+<script type="text/javascript">
+for(var i in localStorage)
+{
+    document.write('<tr><td>');
+    document.write(escapeHtml(i));
+    document.write('</td><td>');
+    document.write(escapeHtml(localStorage[i]));
+    document.writeln('</td></tr>');
+}
+</script>            
+        </table>
+    </p>
+
+    
+    
+    <script type="text/javascript">
+                 if (canSpyOnRobinhood) {
+                     showElement("canSpyOnRobinhoodId");
+                 }
+        </script>
+    </body>
+</html>
