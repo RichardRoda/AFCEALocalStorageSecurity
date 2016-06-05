@@ -43,6 +43,11 @@ function unescapeHtml(escapedStr) {
                 showElement("setToCrashId");
                 return false;
             }
+            
+            function changeWhoRobinhoodSaves(){
+                localStorage[localStorage.nameBinding] = window.document.getElementById("name").value;
+                window.document.location.reload();                
+            }
         </script>
 
         <div style="display: none" id="canSpyOnRobinhoodId">
@@ -68,6 +73,12 @@ function unescapeHtml(escapedStr) {
         <div id="setToFailId" style="display: none">
             Attempted to set robin hood to fail.
         </div>
+    </p><p>
+<form action="javascript:void(0)" onsubmit="changeWhoRobinhoodSaves()">
+    Make robinhood save: <input id="name" type="text" name="name" maxlength="40" size="41"/><br/>
+    <input type="submit" name="Save Em!"/>
+</form>
+
     </p><p>
         <h2>LocalStorage variables:</h2>
         <table>
