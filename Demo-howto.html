@@ -32,13 +32,22 @@ Once set up, the following steps will demonstrate issues with local storage when
 <LI><a href="http://portal.myappserver.mydomain.com:8080/portal2" target="nottingham">http://portal.myappserver.mydomain.com:8080/portal2</a> User name and password: <tt>tomcat</tt></LI></UL>
 Demo 3: Actions in nottingham page do not effect robinhood tab.  The SSO between the portal and protected applications will be broken.</LI>
 
-<LI>Demo 3: open the following in separate browser tabs:
+<LI>Demo 4: open the following in separate browser tabs:
 <UL>
 <LI><a href="http://portal.fixedappserver.mydomain.com:8080/portal3" target="nottingham">http://portal.fixedappserver.mydomain.com:8080/portal3</a> User name and password: <tt>tomcat</tt></LI>
 <LI><a href="http://robinhood.fixedappserver.mydomain.com:8080/robinhood/" target="robinhood">http://robinhood.fixedappserver.mydomain.com:8080/robinhood</a></LI>
 <LI><a href="http://nottingham.fixedappserver.mydomain.com:8080/nottingham" target="nottingham">http://nottingham.fixedappserver.mydomain.com:8080/nottingham</a></LI>
 </UL>
-Demo 3: Actions in nottingham page do not effect robinhood tab.  The SSO between the portal and protected applications will work correctly.  All is well.  Yay!</LI>
+Demo 4: Actions in nottingham page do not effect robinhood tab.  The SSO between the portal and protected applications will work correctly.  All is well.  Yay!</LI>
+
+<LI>Demo 5: open the following in separate browser tabs:
+<UL>
+<LI><a href="http://myappserver.mydomain.com:8080/robinhood-secure" target="robinhood">http://myappserver.mydomain.com:8080/robinhood</a></LI>
+<LI><a href="http://myappserver.mydomain.com:8080/nottingham/" target="nottingham">http://myappserver.mydomain.com:8080/nottingham/</a></LI>
+<LI><a href="http://myappserver.mydomain.com:8080/portal" target="nottingham">http://myappserver.mydomain.com:8080/portal</a> User name and password: <tt>tomcat</tt></LI></UL>
+Actions in nottingham page won't affect the robinhood page because the keys and data are secured.
+The SSO between the portal and protected applications will work.</LI>
+
 </OL>
 <h6>Tomcat version used for this demo: 7.0.37</h6>
 </html>

@@ -4,6 +4,9 @@ and open the template in the editor.
 -->
 <!DOCTYPE html>
 <script type="text/javascript" src="/common/html-escape.js">
+<script type="text/javascript" src="/common/sjcl.js"></script>
+<script type="text/javascript" src="/common/SecureLocalStorage.js"></script>
+
 </script>
 <html>
     <head>
@@ -12,8 +15,8 @@ and open the template in the editor.
     </head>
     <body>
         <div><h2 style="color: lightcoral">We Failed to Save 
-                <script type="text/javascript">document.write(escapeHtml(localStorage[localStorage.nameBinding]));</script></h2></div>
+                <script type="text/javascript">document.write(escapeHtml(getLocalStorage('personToSave')));</script></h2></div>
 
-        <a href='javascript:void(0)' onclick="document.location = localStorage.firstPage;">Save Another</a>
+        <a href='javascript:void(0)' onclick="document.location = './Robinhood1.html';">Save Another</a>
     </body>
 </html>
