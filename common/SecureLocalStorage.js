@@ -1,37 +1,57 @@
 
-var encKey = '143ed16439a38147705da92a93ce6db98a2412c474c958785b26be186efbc15';
-
-function encrypt(value) {
-    return sjcl.encrypt(encKey, value);
-}
-
-function setLocalStorage(key,value) {
-    var encryptedData = encrypt(value);
-    var hashedKey = getHMAC(key);
-    var hashAuthCodeKey = getHMAC(key + 'com.hp.demo.localstorage.protection');
-    var hashAuthCode = getHMAC(value);
-    localStorage[hashedKey] = encryptedData;
-    localStorage[hashAuthCodeKey] = hashAuthCode;
-}
-
-function decrypt(cypherText) {
-    return sjcl.decrypt(encKey, cypherText);
-}
-
-function getLocalStorage(key) {
-    var cypherText = localStorage[getHMAC(key)];
-    var value = decrypt(cypherText);
-    var hashAuthCodeKey = getHMAC(key + 'com.hp.demo.localstorage.protection');
-    var hashAuthCode = getHMAC(value);
-    var storedHashAuthCode = localStorage[hashAuthCodeKey];
-    if (hashAuthCode !== storedHashAuthCode) {
-        throw "HMAC mismatch.  Data corrupted.";
+/**
+ * Constructor for secureStorage facade for application interaction with
+ * localStorage or sessionStorage.
+ * 
+ * @param {String} encKey Hexadecimal string for encryption key, 256 bits.
+ * @param {sessionStorage} storage Optional, defaults to localStorage.  sessionStorage may be 
+ * specified if data does not need to presist outside of the current session.
+ * For applications without persistence requirements, this improves security.
+ * 
+ * @returns {secureStorage}
+ */
+function secureStorage(encKey,storage) {
+    if (storage == null) {
+        storage = localStorage;
     }
-    return value;
-}
 
-function getHMAC(key) {
     var hmac = new sjcl.misc.hmac(sjcl.codec.hex.toBits(encKey), sjcl.hash.sha256);
-    bitArray = hmac.encrypt(key);
-    return sjcl.codec.base64.fromBits(bitArray);  
+
+    this.encrypt = function(value) {
+        return sjcl.encrypt(encKey, value);
+    }
+
+    this.setStorage = function (key,value) {
+        var encryptedData = this.encrypt(value);
+        var hashedKey = this.getHMAC(key);
+        var hashAuthCodeKey = this.getHashAuthCodeKey(key)
+        var hashAuthCode = this.getHMAC(value);
+        storage[hashedKey] = encryptedData;
+        storage[hashAuthCodeKey] = hashAuthCode;
+    }
+    
+    this.getHashAuthCodeKey = function (key) {
+        return this.getHMAC(key + 'com.hpe.demo.storage.protection');
+    }
+    
+    this.decrypt = function (cypherText) {
+        return sjcl.decrypt(encKey, cypherText);
+    }
+
+    this.getStorage = function (key) {
+        var cypherText = storage[this.getHMAC(key)];
+        var value = this.decrypt(cypherText);
+        var hashAuthCodeKey = this.getHashAuthCodeKey(key)
+        var hashAuthCode = this.getHMAC(value);
+        var storedHashAuthCode = storage[hashAuthCodeKey];
+        if (hashAuthCode !== storedHashAuthCode) {
+            throw "HMAC mismatch.  Data corrupted.";
+        }
+        return value;
+    }
+ 
+    this.getHMAC = function (key) {
+        bitArray = hmac.encrypt(key);
+        return sjcl.codec.base64.fromBits(bitArray);  
+    }
 }

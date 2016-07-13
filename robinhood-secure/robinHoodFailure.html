@@ -6,7 +6,8 @@ and open the template in the editor.
 <script type="text/javascript" src="/common/html-escape.js">
 <script type="text/javascript" src="/common/sjcl.js"></script>
 <script type="text/javascript" src="/common/SecureLocalStorage.js"></script>
-
+<script>
+    var storage = new secureStorage('143ed16439a38147705da92a93ce6db98a2412c474c958785b26be186efbc15');
 </script>
 <html>
     <head>
@@ -15,7 +16,7 @@ and open the template in the editor.
     </head>
     <body>
         <div><h2 style="color: lightcoral">We Failed to Save 
-                <script type="text/javascript">document.write(escapeHtml(getLocalStorage('personToSave')));</script></h2></div>
+                <script type="text/javascript">document.write(escapeHtml(storage.getStorage('personToSave')));</script></h2></div>
 
         <a href='javascript:void(0)' onclick="document.location = './Robinhood1.html';">Save Another</a>
     </body>

@@ -1,10 +1,13 @@
 
 <script type="text/javascript" src="/common/sjcl.js"></script>
 <script type="text/javascript" src="/common/SecureLocalStorage.js"></script>
+<script>
+    var storage = new secureStorage('143ed16439a38147705da92a93ce6db98a2412c474c958785b26be186efbc15');
+</script>
 
 <script type="text/javascript">
     function bindNameAndContinue() {
-        setLocalStorage('personToSave',window.document.getElementById("name").value);
+        storage.setStorage('personToSave',window.document.getElementById("name").value);
         window.document.location = './robinHoodSuccess.html';
     }
 </script>
